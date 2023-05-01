@@ -4,6 +4,7 @@
 //   })
 
 
+
 App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
     if (obj !== null) {
         if (obj.type == ObjectEffectType.INTERACTION_WITH_ZEPSCRIPTS) {
@@ -122,24 +123,6 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 			
 
 
-			/* HTTP 코드 START */
-					App.httpPostJson(
-						"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
-						// "https://postman-echo.com/post" ,
-						// "http://localhost:8080/api/zepeto",
-						{
-							// "test-header": "zep",
-						},
-						{
-							name: sender.name,
-							challenge: currentTime
-						},
-						(res) => {
-							
-							App.sayToAll(`HTTP Result: ${JSON.stringify(res)}`);
-						}
-					);
-			/* HTTP 코드 END */
 				 
 				
 				
@@ -156,3 +139,24 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
         App.sayToAll(`obj is null`, 0xFFFFFF);
     }
 });
+
+
+
+			/* HTTP 코드 START */
+			// App.httpPostJson(
+			// 	"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+			// 	// "https://postman-echo.com/post" ,
+			// 	// "http://localhost:8080/api/zepeto",
+			// 	{
+			// 		// "test-header": "zep",
+			// 	},
+			// 	{
+			// 		name: sender.name,
+			// 		challenge: currentTime
+			// 	},
+			// 	(res) => {
+					
+			// 		App.sayToAll(`HTTP Result: ${JSON.stringify(res)}`);
+			// 	}
+			// );
+			/* HTTP 코드 END */
