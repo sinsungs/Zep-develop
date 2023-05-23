@@ -1,3 +1,10 @@
+let java1 = App.loadSpritesheet("001.png");
+let java2 = App.loadSpritesheet("002.png");
+let java3 = App.loadSpritesheet("003.png");
+let java4 = App.loadSpritesheet("004.png");
+let java5 = App.loadSpritesheet("005.png");
+let java6 = App.loadSpritesheet("006.png");
+
 App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
     if (obj !== null) {
         if (obj.type == ObjectEffectType.INTERACTION_WITH_ZEPSCRIPTS) {
@@ -173,6 +180,11 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
                     
                 })
             }
+			if(obj.text == 6) {
+				sender.showAlert(java1, function() {
+				});
+
+			}
 
 			
 

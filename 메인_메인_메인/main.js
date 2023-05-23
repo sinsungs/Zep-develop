@@ -38,9 +38,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 			if (obj.text == 4) {
 				function promptForInput() {
 				  sender.showPrompt("인증 코드를 입력해 주세요.", function (inputText) {
-					// App.sayToAll(randomQuote);
-			  
-					// if (inputText == randomQuote) {
+
 					  App.httpPostJson(
 						"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
 						// "http://localhost:8080/api/zepeto",
@@ -59,7 +57,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							App.sayToAll(`res = ${res}`, 0xFFFFFF);
 						  } 
 						  else if(res === "이미 인증된 계정입니다.") {
-							sender.showAlert(`${sender.name}님 이미 인증에 성공하셨습니다.`);
+							sender.showAlert(`${sender.name}님은 인증에 성공하셨습니다. 챌린지를 수행해 주세요.`);
 						  }
 						  else if(res === "인증 코드가 틀렸습니다."){
 							sender.showAlert(`${sender.name}님 잘못된 인증 코드입니다.`, function () {
@@ -68,17 +66,11 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							});
 						  }
 						  else{
-							sender.showAlert(`내부 서버 에러입니다. 죄송합니다.`);
+							sender.showAlert("내부 서버 에러입니다. 죄송합니다.");
 						  }
 						  
 						}
 					  );
-					// } else {
-					//   sender.showAlert("다시 입력해 주세요.", function () {
-					// 	// Call the promptForInput function again to run the prompt again
-					// 	promptForInput();
-					//   });
-					// }
 				  });
 				}
 				promptForInput();
@@ -86,10 +78,10 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			/* 유저 인증 END */
 
-        }
     } else {
         App.sayToAll(`obj is null`, 0xFFFFFF);
     }
+	}
 });
 
 
