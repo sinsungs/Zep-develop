@@ -1,0 +1,552 @@
+<html lang="en"><input type="hidden" id="__yoroi_connector_api_injected_type" value="prod"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'KIMM_Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'KIMM_Bold';
+            letter-spacing: 2px;
+
+            -ms-overflow-style: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .board {
+            border-radius: 16px;
+            width: 530px;
+            height: 650px;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .inner-board {
+            padding: 2px;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+            box-shadow: 0px 0px 0px 1px #624f38;
+            border: 1px solid #422719;
+            /* border: 2px solid #6c5a46; */
+            background-color: #6e4e35;
+        }
+
+        .square {
+            box-sizing: border-box;
+            /* padding: 4px; */
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            box-shadow: 0px 0px 0px 2px #b58762;
+            border: 1px solid #78563b;
+        }
+
+        .close {
+            width: 32px;
+            cursor: pointer;
+        }
+
+        .header {
+            border-radius: 4px 4px 0px 0px;
+            width: 100%;
+            padding: 15px 0px;
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            color: #fde197;
+            background-color: #5f432e;
+            font-size: 20px;
+            border-bottom: 1px solid #654730;
+            box-shadow: 0px 0px 0px 1px #5f432e;
+            place-items: center;
+        }
+
+        .column-header {
+            padding: 12px 0px 10px 10px;
+            color: #ffcc01;
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr 1.5fr;
+            font-size: 18px;
+            border-bottom: 1px solid #5f432e;
+            place-items: center;
+        }
+
+        .column-content {
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 510px;
+        }
+
+        .li {
+            padding: 10px 0px;
+            color: #e8cb88;
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr 1.5fr;
+            place-items: center;
+            justify-content: center;
+        }
+
+        .name {
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .toggle-right {
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .toggle-left {
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        @media (max-height: 510px) {
+
+            .li {
+                font-size: 13px;
+            }
+
+            .header {
+                font-size: 18px;
+            }
+
+            .column-header {
+                font-size: 15px;
+            }
+
+            .close {
+                width: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+        <div class="inner-board">
+            <div class="square">
+                <div class="header">
+                    <div class="toggle"><span class="toggle-left">◀</span><span class="toggle-content">점수</span><span class="toggle-right">▶</span></div>
+                    <div>⚪ 오늘 미라클 모닝 랭킹 ⚪</div>
+                    <img class="close" onclick="closeWidget()" src="data:image/png;base64,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">
+                </div>
+                <div class="column-header">
+                    <div>순위</div>
+                    <div>이름</div>
+                    <div>기상 시간</div>
+                    <div class="rank-type">총 성공 횟수 </div>
+                </div>
+                <div class="column-content"><div class="li" id="2Jn84Q">
+                    <div>1</div>
+                    <div class="name">강신성</div>
+                    <div>06:00</div>
+                    <div>25번</div>
+                </div><div class="li" id="0vyMPE">
+                    <div>2</div>
+                    <div class="name">심상희</div>
+                    <div>06:30</div>
+                    <div>65번</div>
+                </div><div class="li" id="mMZjOz">
+                    <div>3</div>
+                    <div class="name">김유현</div>
+                    <div>07:00</div>
+                    <div>35번</div>
+                </div><div class="li" id="onLGRl">
+                    <div>4</div>
+                    <div class="name">조황주</div>
+                    <div>07:13</div>
+                    <div>23번</div>
+                </div><div class="li" id="m6Wx4K">
+                    <div>5</div>
+                    <div class="name">노태권</div>
+                    <div>07:25</div>
+                    <div>70번</div>
+                </div><div class="li" id="0Q6PgR">
+                    <div>6</div>
+                    <div class="name">이민화</div>
+                    <div>07:45</div>
+                    <div>40번</div>
+                </div><div class="li" id="oVZabG">
+                    <div>7</div>
+                    <div class="name">!!두산!!</div>
+                    <div>2715</div>
+                    <div>162승 8패</div>
+                </div><div class="li" id="09eknj">
+                    <div>8</div>
+                    <div class="name">Jarvis</div>
+                    <div>2660</div>
+                    <div>136승 15패</div>
+                </div><div class="li" id="2NXqbx">
+                    <div>9</div>
+                    <div class="name">보름달(네잎클로버)</div>
+                    <div>2637</div>
+                    <div>370승 87패</div>
+                </div><div class="li" id="m8e19v">
+                    <div>10</div>
+                    <div class="name">?</div>
+                    <div>2615</div>
+                    <div>245승 59패</div>
+                </div><div class="li" id="23ByLK">
+                    <div>11</div>
+                    <div class="name">.</div>
+                    <div>2601</div>
+                    <div>7승 2패</div>
+                </div><div class="li" id="2LBQb8">
+                    <div>12</div>
+                    <div class="name">컴백한 가라사대</div>
+                    <div>2591</div>
+                    <div>267승 41패</div>
+                </div><div class="li" id="2dzYZZ">
+                    <div>13</div>
+                    <div class="name">수사관</div>
+                    <div>2524</div>
+                    <div>237승 38패</div>
+                </div><div class="li" id="oOVjGJ">
+                    <div>14</div>
+                    <div class="name">오마에와 모 신데이루</div>
+                    <div>2510</div>
+                    <div>120승 3패</div>
+                </div><div class="li" id="oG3qEn">
+                    <div>15</div>
+                    <div class="name">위대한Kal</div>
+                    <div>2402</div>
+                    <div>195승 32패</div>
+                </div><div class="li" id="m7PdAb">
+                    <div>16</div>
+                    <div class="name">vip777</div>
+                    <div>2396</div>
+                    <div>159승 33패</div>
+                </div><div class="li" id="oOMqQ6">
+                    <div>17</div>
+                    <div class="name">😈완전히 각성한 승우😈</div>
+                    <div>2396</div>
+                    <div>52승 12패</div>
+                </div><div class="li" id="0R9wVE">
+                    <div>18</div>
+                    <div class="name">병아리🐤</div>
+                    <div>2375</div>
+                    <div>996승 541패</div>
+                </div><div class="li" id="2XPYMW">
+                    <div>19</div>
+                    <div class="name">나는 문어</div>
+                    <div>2372</div>
+                    <div>145승 31패</div>
+                </div><div class="li" id="ml99e2">
+                    <div>20</div>
+                    <div class="name">알아이디</div>
+                    <div>2367</div>
+                    <div>206승 35패</div>
+                </div><div class="li" id="2dEzD4">
+                    <div>21</div>
+                    <div class="name">검은색 름달이</div>
+                    <div>2311</div>
+                    <div>677승 193패</div>
+                </div><div class="li" id="m7D4rx">
+                    <div>22</div>
+                    <div class="name">(후원 받고 싶은)민송</div>
+                    <div>2249</div>
+                    <div>82승 23패</div>
+                </div><div class="li" id="mM9q9d">
+                    <div>23</div>
+                    <div class="name">😀</div>
+                    <div>2195</div>
+                    <div>151승 29패</div>
+                </div><div class="li" id="oxGWa3">
+                    <div>24</div>
+                    <div class="name">북조선 북치기</div>
+                    <div>2176</div>
+                    <div>180승 76패</div>
+                </div><div class="li" id="m8ALbW">
+                    <div>25</div>
+                    <div class="name">Pongduck</div>
+                    <div>2173</div>
+                    <div>1152승 378패</div>
+                </div><div class="li" id="0QVnOg">
+                    <div>26</div>
+                    <div class="name">아린(남친구함)</div>
+                    <div>2173</div>
+                    <div>256승 92패</div>
+                </div><div class="li" id="onzeON">
+                    <div>27</div>
+                    <div class="name">나</div>
+                    <div>2159</div>
+                    <div>22승 9패</div>
+                </div><div class="li" id="oDbPd3">
+                    <div>28</div>
+                    <div class="name">한여름에 핫팩</div>
+                    <div>2150</div>
+                    <div>78승 10패</div>
+                </div><div class="li" id="m6WG4K">
+                    <div>29</div>
+                    <div class="name">리틀교수</div>
+                    <div>2101</div>
+                    <div>2승 2패</div>
+                </div><div class="li" id="ona4pl">
+                    <div>30</div>
+                    <div class="name">남재민</div>
+                    <div>2064</div>
+                    <div>169승 68패</div>
+                </div><div class="li" id="0gZP7G">
+                    <div>31</div>
+                    <div class="name">뷁췐호우</div>
+                    <div>2064</div>
+                    <div>158승 56패</div>
+                </div><div class="li" id="oGB8JR">
+                    <div>32</div>
+                    <div class="name">끄투 원탑</div>
+                    <div>2037</div>
+                    <div>96승 26패</div>
+                </div><div class="li" id="0vyyQG">
+                    <div>33</div>
+                    <div class="name">오범준</div>
+                    <div>2036</div>
+                    <div>262승 104패</div>
+                </div><div class="li" id="oxP8gj">
+                    <div>34</div>
+                    <div class="name">희희</div>
+                    <div>2034</div>
+                    <div>157승 35패</div>
+                </div><div class="li" id="2eXJe3">
+                    <div>35</div>
+                    <div class="name">냐옹</div>
+                    <div>2028</div>
+                    <div>186승 119패</div>
+                </div><div class="li" id="2dG16Z">
+                    <div>36</div>
+                    <div class="name">an</div>
+                    <div>2014</div>
+                    <div>227승 114패</div>
+                </div><div class="li" id="oPnwE8">
+                    <div>37</div>
+                    <div class="name">성이름</div>
+                    <div>2008</div>
+                    <div>60승 2패</div>
+                </div><div class="li" id="2EBw6a">
+                    <div>38</div>
+                    <div class="name">김영재</div>
+                    <div>2000</div>
+                    <div>228승 73패</div>
+                </div><div class="li" id="2LVAQA">
+                    <div>39</div>
+                    <div class="name">duck</div>
+                    <div>1956</div>
+                    <div>140승 86패</div>
+                </div><div class="li" id="o16RJp">
+                    <div>40</div>
+                    <div class="name">치치</div>
+                    <div>1940</div>
+                    <div>27승 14패</div>
+                </div><div class="li" id="m8eVKl">
+                    <div>41</div>
+                    <div class="name">無</div>
+                    <div>1924</div>
+                    <div>458승 375패</div>
+                </div><div class="li" id="mYPbxM">
+                    <div>42</div>
+                    <div class="name">.</div>
+                    <div>1913</div>
+                    <div>113승 135패</div>
+                </div><div class="li" id="m7WyGb">
+                    <div>43</div>
+                    <div class="name">구구구</div>
+                    <div>1909</div>
+                    <div>49승 3패</div>
+                </div><div class="li" id="0vgxBl">
+                    <div>44</div>
+                    <div class="name">요요</div>
+                    <div>1892</div>
+                    <div>125승 75패</div>
+                </div><div class="li" id="oBWYaG">
+                    <div>45</div>
+                    <div class="name">소금</div>
+                    <div>1884</div>
+                    <div>119승 42패</div>
+                </div><div class="li" id="2dOxJK">
+                    <div>46</div>
+                    <div class="name">북한산</div>
+                    <div>1880</div>
+                    <div>64승 14패</div>
+                </div><div class="li" id="0AaRw0">
+                    <div>47</div>
+                    <div class="name">Green Han</div>
+                    <div>1867</div>
+                    <div>70승 23패</div>
+                </div><div class="li" id="2XPbEl">
+                    <div>48</div>
+                    <div class="name">나이따</div>
+                    <div>1856</div>
+                    <div>116승 71패</div>
+                </div><div class="li" id="mYPjJa">
+                    <div>49</div>
+                    <div class="name">초코섬</div>
+                    <div>1851</div>
+                    <div>107승 69패</div>
+                </div><div class="li" id="05lNxl">
+                    <div>50</div>
+                    <div class="name">배터리</div>
+                    <div>1847</div>
+                    <div>54승 4패</div>
+                </div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let pointRanking;
+        let gameRanking;
+        let myID;
+        let toggleIndex = 0;
+        let isSwitching = false;
+        const toggleContent = ["점수", "판수"]
+
+        document.querySelector(".toggle-left").addEventListener("click", (e) => {
+            if (isSwitching) return;
+            toggleIndex -= 1;
+            switchToggle(toggleIndex);
+        })
+
+        document.querySelector(".toggle-right").addEventListener("click", (e) => {
+            if (isSwitching) return;
+            toggleIndex += 1;
+            switchToggle(toggleIndex);
+        })
+
+        function switchToggle(index) {
+            isSwitching = true;
+            let contentLength = toggleContent.length;
+            if (index < 0) {
+                toggleIndex = contentLength - 1;
+            } else if (index > contentLength - 1) {
+                toggleIndex = 0;
+            }
+
+            document.querySelector(".toggle-content").innerHTML = toggleContent[toggleIndex];
+            if (toggleIndex == 0) {
+                RenderRank(pointRanking);
+            } else if (toggleIndex == 1) {
+                RenderRank(gameRanking);
+            }
+            isSwitching = false;
+        }
+
+        window.addEventListener("message", function (e) {
+/*            if (e.data.type == "init") {    */
+
+/*    let cid = e.data.cid;
+    let cvzepid = e.data.cvzepid;
+    let cvtime = e.data.cvtime;
+    let cvsuccessornot = e.data.cvsuccessornot;   */
+    let pointRanking = e.data
+
+    RenderRank(pointRanking);
+    
+    // cid: res.cid,
+    // cvzepid: res.cvzepid,
+    // cvtime: res.cvtime,
+    // cvsuccessornot: res.cvsuccessornot
+
+
+    //            pointRanking = e.data.pointRanking;
+    //            gameRanking = e.data.gameRanking;
+  //              myID = e.data.myID;
+
+                RenderRank(pointRanking);
+
+                if (e.data.isMobile) {
+                    window.parent.postMessage({
+                        type: 'WidgetRearrange',
+                        anchor: "bottom",
+                        width: `100%`, // 위치조정
+                        height: `475px` // 위치조정
+                    }, "*");
+                    document.querySelector(".board").style.height = "100%"
+                    document.querySelector(".column-content").style.maxHeight = "370px"
+                } else {
+                    window.parent.postMessage({
+                        type: 'WidgetRearrange',
+                        height: `700px`, // 위치조정
+                        anchor: "middle",
+                        top: "-60px"
+                    }, "*");
+                }
+/*            }   */
+        })
+
+        function RenderRank(arr) {
+            document.querySelector(".column-content").innerHTML = "";
+            for (let i = 0; i < arr.length; i++) {
+                let data = arr[i];
+                let template = `<div class="li" id="${data.cid}" ${data.cid == data.cid ? `style = "color: #04ff00"` : ""}>
+                    <div>${i + 1}</div>
+                    <div class="name">${data.cvzepid}</div>
+                    <div>${data.cvsuccessornot}</div>
+                    <div>3승 2패</div>
+                </div>`
+
+                document.querySelector(".column-content").innerHTML += template;
+            }
+        }
+        
+/*        
+            function RenderRank(arr) {
+            document.querySelector(".column-content").innerHTML = "";
+            for (let i = 0; i < arr.length; i++) {
+                let data = arr[i];
+                let template = `<div class="li" id="${data.id}" ${data.id == myID ? `style = "color: #04ff00"` : ""}>
+                    <div>${i + 1}</div>
+                    <div class="name">${data.name}</div>
+                    <div>${data.point}</div>
+                    <div>${data.win}승 ${data.lose}패</div>
+                </div>`
+
+                document.querySelector(".column-content").innerHTML += template;
+            }
+        }
+*/
+        function closeWidget() {
+            window.parent.postMessage({
+                type: "close"
+            }, "*")
+        }
+    </script>
+
+
+</body></html>

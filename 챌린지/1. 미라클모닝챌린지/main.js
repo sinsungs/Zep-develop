@@ -2,21 +2,21 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
     if (obj !== null) {
         if (obj.type == ObjectEffectType.INTERACTION_WITH_ZEPSCRIPTS) {
 
-			const currentTime = formatKoreanTime(new Date());
+			// const currentTime = formatKoreanTime(new Date());
 
-			function formatKoreanTime(date) {
-			  const koreanOffset = 9 * 60; // offset in minutes
-			  const utc = date.getTime() + (date.getTimezoneOffset() * 60000); // convert to UTC
-			  const koreanTime = new Date(utc + (koreanOffset * 60000)); // add KST offset in minutes
-			  const year = koreanTime.getFullYear();
-			  const month = ('0' + (koreanTime.getMonth() + 1)).slice(-2);
-			  const day = ('0' + koreanTime.getDate()).slice(-2);
-			  const hours = ('0' + koreanTime.getHours()).slice(-2);
-			  const minutes = ('0' + koreanTime.getMinutes()).slice(-2);
-			  const seconds = ('0' + koreanTime.getSeconds()).slice(-2);
-			  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-			}
-			
+			// function formatKoreanTime(date) {
+			//   const koreanOffset = 9 * 60; // offset in minutes
+			//   const utc = date.getTime() + (date.getTimezoneOffset() * 60000); // convert to UTC
+			//   const koreanTime = new Date(utc + (koreanOffset * 60000)); // add KST offset in minutes
+			//   const year = koreanTime.getFullYear();
+			//   const month = ('0' + (koreanTime.getMonth() + 1)).slice(-2);
+			//   const day = ('0' + koreanTime.getDate()).slice(-2);
+			//   const hours = ('0' + koreanTime.getHours()).slice(-2);
+			//   const minutes = ('0' + koreanTime.getMinutes()).slice(-2);
+			//   const seconds = ('0' + koreanTime.getSeconds()).slice(-2);
+			//   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+			// }
+
 
 			const quotes = [ "삶이 있는 한 희망은 있다",
 			"살아가는 것은 치열한 전투이다",
@@ -33,29 +33,31 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			const randomQuote = quotes[randomIndex];
 			
-			const text = "챌린지 인증을 위해 오늘의 명언 '" + randomQuote + "' 정확하게 입력해주세요 "
+			const text = "미라클 모닝 인증을 위해\n" + "명언을 정확하게 입력해주세요\n\n" +  randomQuote
 			const textx = "다시 입력 해주세요 !"
 			const texto = sender.name + "님 미라클 모닝 인증에 성공하셨습니다 !"
 
 			/* 미라클 모닝 START */
 			if(obj.text == 1) {
 				function promptForInput() {
-					sender.showPrompt(text, function(inputText){
+					sender.showPrompt(text, function(inputText, result){
 
 						App.sayToAll(randomQuote);
+						App.sayToAll(result);
 
 						if(inputText == randomQuote){
 							
 							App.httpPostJson(
-								"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+								"http://13.125.99.177:8070/challenge/zepverify",
+								// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
 								// "http://localhost:8080/api/zepeto",
 								{
 									// "test-header": "zep",
 								},
 								{
 									cid: 1,
-									cvzepid: sender.name,
-									cvtime: currentTime,
+									cvzepid: sender.id,
+									// cvtime: currentTime,
 									cvsuccessornot: 1
 								},
 								(res) => {
@@ -65,17 +67,26 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							);	
 
 							sender.showAlert(texto, function() {
-								// sender.showAlert("오늘의 명언 : " + quotes[0], function() {
-								// 	sender.spawnAtMap("ADd52m", "8J6PRM");
-								// });
 
 							});
 						} else {
-							sender.showAlert(textx, function() {
-								// Call the promptForInput function again to run the prompt again
-								promptForInput();
-							  });
+							// sender.showAlert(textx, function() {
+							// 	// Call the promptForInput function again to run the prompt again
+							// 	promptForInput();
+							//   });
+						
+							sender.showAlert("다시 입력 해 주세요", function() {
+							});
+							// promptForInput();
 						}
+						
+						// if (inputText != randomQuote){
+						// 	sender.showAlert("다시 입력 해 주세요", function() {
+						// 	});
+						// 	// promptForInput();
+						// }
+						
+						
 					})  
 				}
 				promptForInput();
@@ -83,10 +94,47 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			/* 미라클 모닝 END */
 
-			if(obj.text == 2) {
-				sender.showAlert(currentTime, function() {
 
-				})
+			// sender.showConfirm("첫번째 도서의 베스트 독후감을 읽어보시겠습니까 ?", (result) => {
+			// 	if(result == true){
+			// 		setTimeout(function(){
+
+			// 			sender.showAlert(result);
+						
+			// 		}, 300);
+			// 	}
+			// })
+		 
+
+			if(obj.text == 2) {
+				
+				// sender.showAlert(currentTime, function() {
+
+				// })
+
+                    // App.httpGet(
+                    //     "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+                    //     null,
+                    //     function (res) {	
+					// 		res.name
+					// 		res.time
+					// 		res.successCount
+                    //     }
+                    // );
+
+				sender.tag = {
+					widget: null,
+				};
+			
+				sender.tag.widget = sender.showWidget("rank.html", "top", 530, 650);
+				sender.tag.widget.onMessage.Add(function (sender, data) {
+					if (data.type == "close") {
+						sender.showCenterLabel("위젯이 닫혔습니다.");
+						sender.tag.widget.destroy();
+						sender.tag.widget = null;
+					}
+				});
+				sender.sendUpdated();
 			}
 
 

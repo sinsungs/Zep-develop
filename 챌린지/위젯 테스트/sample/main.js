@@ -4,7 +4,7 @@ App.onJoinPlayer.Add(function (player) {
 		widget: null,
 	};
 
-	player.tag.widget = player.showWidget("sample.html", "topright", 500, 500);
+	player.tag.widget = player.showWidget("sample.html", "topright", 1000, 1000);
 	player.tag.widget.onMessage.Add(function (player, data) {
 		if (data.type == "close") {
 			player.showCenterLabel("위젯이 닫혔습니다.");

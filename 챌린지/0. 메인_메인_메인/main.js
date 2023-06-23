@@ -16,20 +16,36 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			if(obj.text == 1) {
 				sender.showConfirm("미라클 모닝 챌린지에 참가하시겠습니까 ?", (result) => {
-					sender.spawnAtMap("ADd52m", "8ALKvz");
+
+					if(result == true){
+
+						sender.spawnAtMap("ADd52m", "8ALKvz");
+
+					}
 				});
 				
 			}
 			if(obj.text == 2) {
 				sender.showConfirm("코딩 챌린지에 참가하시겠습니까 ?", (result) => {
+
+					if(result == true){
+
 					sender.spawnAtMap("ADd52m", "yVGP1n");
+
+					}
 				});
 				
 			}
 
 			if(obj.text == 3) {
 				sender.showConfirm("책맹탈출 챌린지에 참가하시겠습니까 ?", (result) => {
-					sender.spawnAtMap("ADd52m", "ykONgz");
+
+					if(result == true){
+
+						sender.spawnAtMap("ADd52m", "ykONgz");
+
+					}
+
 				});
 				
 			}
@@ -40,7 +56,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 				  sender.showPrompt("인증 코드를 입력해 주세요.", function (inputText) {
 
 					  App.httpPostJson(
-						"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+						"http://13.125.99.177:8070/challenge/zepverify",
 						// "http://localhost:8080/api/zepeto",
 						{
 						  // "test-header": "zep",
@@ -77,6 +93,37 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 			  }
 
 			/* 유저 인증 END */
+
+			/* 스터디 챌린지 START */
+
+			if (obj.text == 5) {
+				
+				App.httpGet(
+					"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+					null,
+					function (res) {
+
+						if(res === trus) {
+							sender.showAlert(res.title, function() {
+					
+							})
+							// 챌린지 맵 이동 
+						}
+						else if(res === false) {
+							sender.showAlert('오늘 스터디 챌린지 일정이 없는 유저입니다', function() {
+								
+							})
+						}
+
+
+
+						
+					}
+				);
+			}
+
+
+			/* 스터디 챌린지 END */
 
     } else {
         App.sayToAll(`obj is null`, 0xFFFFFF);

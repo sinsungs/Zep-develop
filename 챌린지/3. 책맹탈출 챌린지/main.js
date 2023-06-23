@@ -2,20 +2,20 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
     if (obj !== null) {
         if (obj.type == ObjectEffectType.INTERACTION_WITH_ZEPSCRIPTS) {
 			
-			const currentTime = formatKoreanTime(new Date());
+			// const currentTime = formatKoreanTime(new Date());
 
-			function formatKoreanTime(date) {
-			  const koreanOffset = 9 * 60; // offset in minutes
-			  const utc = date.getTime() + (date.getTimezoneOffset() * 60000); // convert to UTC
-			  const koreanTime = new Date(utc + (koreanOffset * 60000)); // add KST offset in minutes
-			  const year = koreanTime.getFullYear();
-			  const month = ('0' + (koreanTime.getMonth() + 1)).slice(-2);
-			  const day = ('0' + koreanTime.getDate()).slice(-2);
-			  const hours = ('0' + koreanTime.getHours()).slice(-2);
-			  const minutes = ('0' + koreanTime.getMinutes()).slice(-2);
-			  const seconds = ('0' + koreanTime.getSeconds()).slice(-2);
-			  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-			}
+			// function formatKoreanTime(date) {
+			//   const koreanOffset = 9 * 60; // offset in minutes
+			//   const utc = date.getTime() + (date.getTimezoneOffset() * 60000); // convert to UTC
+			//   const koreanTime = new Date(utc + (koreanOffset * 60000)); // add KST offset in minutes
+			//   const year = koreanTime.getFullYear();
+			//   const month = ('0' + (koreanTime.getMonth() + 1)).slice(-2);
+			//   const day = ('0' + koreanTime.getDate()).slice(-2);
+			//   const hours = ('0' + koreanTime.getHours()).slice(-2);
+			//   const minutes = ('0' + koreanTime.getMinutes()).slice(-2);
+			//   const seconds = ('0' + koreanTime.getSeconds()).slice(-2);
+			//   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+			// }
 
 			const textx = "다시 입력 해주세요 !"
 			const texto = "정답입니다 !"
@@ -23,7 +23,9 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			if(obj.text == 1) {
 				sender.showConfirm("정보처리 산업기사 선택하시겠습니까 ?", (result) => {
-					sender.spawnAt(15, 53, 1);
+					if(result == true){
+						sender.spawnAt(15, 53, 1);
+					}
 				});
 				
 			}
@@ -51,7 +53,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 						} else {
 							sender.showAlert(textx, function() {
 
-								promptForInput();
+								// promptForInput();
 							  });
 						}
 					})  
@@ -73,7 +75,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 						} else {
 							sender.showAlert(textx, function() {
 								// Call the promptForInput function again to run the prompt again
-								promptForInput();
+								// promptForInput();
 							  });
 						}
 					})  
@@ -95,7 +97,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 						} else {
 							sender.showAlert(textx, function() {
 								// Call the promptForInput function again to run the prompt again
-								promptForInput();
+								// promptForInput();
 							  });
 						}
 					})  
@@ -109,17 +111,18 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 	
 			if(obj.text == 98) {
 					sender.showConfirm("책맹탈출 참여를 인증하시겠습니까 ?", (result) => {
-
+						if(result == true){
+							
 						App.httpPostJson(
-							"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+							"http://13.125.99.177:8070/challenge/zepverify",
 							// "http://localhost:8080/api/zepeto",
 							{
 								// "test-header": "zep",
 							},
 							{
 								cid: 3,
-								cvzepid: sender.name,
-								cvtime: currentTime,
+								cvzepid: sender.id,
+								// cvtime: currentTime,
 								cvsuccessornot: 1
 							},
 							(res) => {
@@ -128,14 +131,17 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							}
 						);	
 
-
 							sender.spawnAtMap("ADd52m", "8J6PRM");
+
+						}
 					});
 			}
 
 			if(obj.text == 99) {
 				sender.showConfirm("처음으로 돌아가시겠습니까 ?", (result) => {
-					sender.spawnAt(4, 63, 1);
+					if(result == true){
+						sender.spawnAt(4, 63, 1);
+					}
 				});
 		}
         } 

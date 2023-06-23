@@ -4,7 +4,7 @@ App.onJoinPlayer.Add(function (player) {
 		widget: null,
 	};
 
-	player.tag.widget = player.showWidget("sample.html", "topright", 500, 500);
+	player.tag.widget = player.showWidget("rank.html", "top", 530, 650);
 	player.tag.widget.onMessage.Add(function (player, data) {
 		if (data.type == "close") {
 			player.showCenterLabel("위젯이 닫혔습니다.");
@@ -25,4 +25,31 @@ App.addOnKeyDown(81, function (player) {
 			text: "블루맨",
 		});
 	}
+});
+
+
+
+// q를 누르면 동작하는 함수
+App.addOnKeyDown(81, function (player) {
+
+	App.httpGet(
+		"http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
+		null,
+		function (res) {	
+
+			if (player.tag.widget) {
+				player.tag.widget.sendMessage({
+					// cid: res.cid,
+					// cvzepid: res.cvzepid,
+					// cvtime: res.cvtime,
+					// cvsuccessornot: res.cvsuccessornot
+					res
+				});
+			}
+			
+		}
+	);
+
+
+
 });

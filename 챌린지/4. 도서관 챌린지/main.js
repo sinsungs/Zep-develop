@@ -31,41 +31,60 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
                     // );
 
                     
-                    // sender.showPrompt("독후감을 작성하세요", function(inputText){
 
-                        sender.showConfirm("첫번째 도서의 최고 독후감을 읽어보시겠습니까 ?", (result) => {
-                            setTimeout(function(){
 
-                                sender.showAlert(result);
-                                
-                            }, 300);
-                            
+                        sender.showConfirm("첫번째 도서의 베스트 독후감을 읽어보시겠습니까 ?", (result) => {
+                            if(result == true){
+                                setTimeout(function(){
+
+                                    sender.showAlert(result);
+                                    
+                                }, 300);
+                            }
                         })
                      
-                    // })
+                    
  
 
 
 			}
 
+            if(obj.text == 11) {
+
+                sender.showPrompt("첫번째 추천 도서의 독후감을 작성해주세요.", function(inputText){
+                
+                })
+
+            }
+
             if(obj.text == 2) {
 
-                sender.showConfirm("두번째 도서의 독후감을 읽어보시겠습니까 ?", (result) => {
+                sender.showConfirm("두번째 도서의 베스트 독후감을 읽어보시겠습니까 ?", (result) => {
                     setTimeout(function(){
+
                         sender.showAlert(result);
+                        
                     }, 300);
                     
                 })
 
 			}
 
-            if(obj.text == 3) {
+            if (obj.text == 2) {
+                sender.showConfirm("두번째 도서의 베스트 독후감을 읽어보시겠습니까?", (result) => {
+                    setTimeout(function() {
 
-                sender.showConfirm("세번째 도서의 독후감을 읽어보시겠습니까 ?", (result) => {
-                    setTimeout(function(){
-                        sender.showAlert(result);
+                        const report = "이 책은 흥미로운 이야기와 깊은 의미를 담고 있어서 매우 흥미로웠습니다. 저자는 강렬한 서술력을 가지고 있어서 이야기에 몰입할 수 있었고, 인물들의 성장과 변화를 잘 그려냈습니다. 또한 책에서 다루는 주제들이 현대 사회에 대한 고민과 함께 잘 반영되어 있어 생각할 거리가 많았습니다. 이 책은 꼭 읽어보시기를 추천합니다!";
+                        sender.showAlert(report);
+     
                     }, 300);
-                    
+                });
+            }
+
+            if(obj.text == 22) {
+
+                sender.showPrompt("두번째 추천 도서의 독후감을 작성해주세요.", function(inputText){
+                
                 })
 
 			}
