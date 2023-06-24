@@ -43,8 +43,14 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 			/* 책맹탈출 챌린지 START */
 			if(obj.text == 3) {
 				function promptForInput() {
-					sender.showPrompt(quizQuestions[0], function(inputText){
-						if(inputText == quizAnswers[0]){
+
+                    var randomIndex = Math.floor(Math.random() * quizQuestions.length); // Generate a random index within the range of the array length
+                    var currentQuestion = quizQuestions[randomIndex];
+                    var currentAnswer = quizAnswers[randomIndex];
+
+					sender.showPrompt(currentQuestion, function(inputText){
+
+						if(inputText == currentAnswer){
 
 							sender.showAlert(texto, function() {
 
@@ -64,8 +70,8 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			if(obj.text == 4) {
 				function promptForInput() {
-					sender.showPrompt(quizQuestions[1], function(inputText){
-						if(inputText == quizAnswers[1]){
+					sender.showPrompt(currentQuestion, function(inputText){
+						if(inputText == currentAnswer){
 
 							sender.showAlert(texto, function() {
 								// Call the promptForInput function again to run the prompt again
@@ -86,8 +92,8 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			if(obj.text == 5) {
 				function promptForInput() {
-					sender.showPrompt(quizQuestions[2], function(inputText){
-						if(inputText == quizAnswers[2]){
+					sender.showPrompt(currentQuestion, function(inputText){
+						if(inputText == currentAnswer){
 
 							sender.showAlert(texto, function() {
 								

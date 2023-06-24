@@ -208,8 +208,24 @@
                     <div class="name">이민화</div>
                     <div>07:45</div>
                     <div>40번</div>
-                </div><div class="li" id="oVZabG">
-                    <div>7</div>
+                </div>
+
+                <div class="li" id="0Q6PgR">
+                    <div>6</div>
+                    <div class="name">이민화</div>
+                    <div>07:45</div>
+                    <div>40번</div>
+                </div>
+
+                <div class="li" id="sss">
+                    <div id="title">Sample</div>
+                    <div id="rank">Sample</div>
+                    <div id="like">Sample</div>
+                    <div id="text">Sample</div>
+                </div>
+
+                <!-- <div class="li" id="oVZabG"> -->
+                    <!-- <div>7</div>
                     <div class="name">!!두산!!</div>
                     <div>2715</div>
                     <div>162승 8패</div>
@@ -428,7 +444,7 @@
                     <div class="name">배터리</div>
                     <div>1847</div>
                     <div>54승 4패</div>
-                </div> 
+                </div>  -->
                 </div>
             </div>
         </div>
@@ -473,13 +489,63 @@
             isSwitching = false;
         }
 
+ /*       window.addEventListener("message", function (e) {
+
+			let title = e.data.title;
+			let rank = e.data.rank;
+			let like = e.data.like;
+			let text = e.data.text;
+			
+			if (title) {
+				document.getElementById("title").innerText = title;
+			}
+			if (rank) {
+				document.getElementById("rank").innerText = rank;
+			}
+			if (like) {
+				document.getElementById("like").innerText = like;
+			}
+			if (text) {
+				document.getElementById("text").innerText = text;
+			}
+        });
+
+*/
         window.addEventListener("message", function (e) {
 /*            if (e.data.type == "init") {    */
-                pointRanking = e.data.pointRanking;
-                gameRanking = e.data.gameRanking;
-                myID = e.data.myID;
-                // 위의 부분은 데이터 바인딩 
+                
+                pointRanking = e.data.zepRanks;
+/*              
+                let title = e.data.cid;
+                let rank = e.data.cvzepid
+                let like = e.data.cvtime
+                let text = e.data.cvsuccessornot
+
+                if (title) {
+                    document.getElementById("title").innerText = title;
+                }
+                if (rank) {
+                    document.getElementById("rank").innerText = rank;
+                }
+                if (like) {
+                    document.getElementById("like").innerText = like;
+                }
+                if (text) {
+                    document.getElementById("text").innerText = text;
+                }
+*/
                 RenderRank(pointRanking);
+
+//                alert(pointRanking);
+
+                //console.log(pointRanking);
+                //pointRanking = e.data.pointRanking;
+                // gameRanking = e.data.gameRanking;
+                //myID = e.data.myID;
+                // 위의 부분은 데이터 바인딩 
+
+
+                
                 // 바인딩한 데이터를 함수로 넘겨주고 출력
 
                 if (e.data.isMobile) {
@@ -503,14 +569,19 @@
         })
 
         function RenderRank(arr) {
+            
+           // const arr = JSON.parse(arr);
+           console.log(arr); // Debugging the value of arr
+
             document.querySelector(".column-content").innerHTML = "";
             for (let i = 0; i < arr.length; i++) {
                 let data = arr[i];
-                let template = `<div class="li" id="${data.id}" ${data.id == myID ? `style = "color: #04ff00"` : ""}>
+                //let template = `<div class="li" id="${data.id}" ${data.cid == myID ? `style = "color: #04ff00"` : ""}>
+                let template = `<div class="li" id="${data.cid}"}>
                     <div>${i + 1}</div>
-                    <div class="name">${data.name}</div>
-                    <div>${data.point}</div>
-                    <div>${data.win}승 ${data.lose}패</div>
+                    <div class="name">${data.cvzepid}</div>
+                    <div>${data.cvtime}</div>
+                    <div>${data.cvsuccessornot}번</div>
                 </div>`
 
                 document.querySelector(".column-content").innerHTML += template;
@@ -519,7 +590,8 @@
 
         function closeWidget() {
             window.parent.postMessage({
-                type: "close"
+                type: "close",
+                ss : pointRanking
             }, "*")
         }
     </script>

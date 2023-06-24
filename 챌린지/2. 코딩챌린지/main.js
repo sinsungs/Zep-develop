@@ -1,3 +1,29 @@
+var Python = "다음은 Python 알고리즘 퀴즈입니다.\n\n"
+        + "오늘의 문제:\n"
+        + "다음 코드의 출력 결과는 무엇일까요?\n\n"
+        + "a = 1\n"
+        + "b = 2\n"
+        + "c = a if a > b else b\n"
+        + "print(c)\n"
+
+var Java = '다음은 Java 알고리즘 퀴즈입니다.\n\n'
+        + '오늘의 문제:\n'
+        + '다음 코드의 실행 출력결과는?\n\n'
+        + 'int a = 1;\n'
+        + 'int b = 2;\n'
+        + 'int c = (a > b) ? a : b;\n'
+        + 'System.out.println(c);\n';
+
+var JS = "다음은 JavaScript 알고리즘 퀴즈입니다.\n\n"
+		+ "오늘의 문제:\n"
+		+ "다음 코드의 출력 결과는 무엇일까요?\n\n"
+		+ "var a = 1;\n"
+		+ "var b = 2;\n"
+		+ "var c = (a > b) ? a : b;\n"
+		+ "console.log(c);\n";
+
+
+
 
 App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
     if (obj !== null) {
@@ -7,9 +33,9 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 			const quizx = " 다시 입력 해주세요 !"
 			const quizo = sender.name + "님 코딩 챌린지 인증에 성공하셨습니다 !"
 
-				let pyquizAnswer = "22"
-				let javaquizAnswer = "30"
-				let jsquizAnswer = "-35"
+				let pyquizAnswer = "2"
+				let javaquizAnswer = "2"
+				let jsquizAnswer = "2"
 
 
 
@@ -28,11 +54,11 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 					function promptForInput() {
 
-						sender.showPrompt("파이썬 챌린지의 오늘 정답은 ?", function(inputText){
+						sender.showPrompt( Python , function(inputText){
 							if(inputText.toLowerCase() == pyquizAnswer.toLowerCase()){
 
 								App.httpPostJson(
-									"http://13.125.99.177:8070/challenge/zepverify",
+									"https://godsaengplanner.com/challenge/zepverify",
 									// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
 									// "http://localhost:8080/api/zepeto",
 									{
@@ -40,7 +66,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 									},
 									{
 										cid: 2,
-										cvzepid: sender.name,
+										cvzepid: sender.id,
 										// cvtime: currentTime,
 										cvsuccessornot: 1
 									},
@@ -62,8 +88,8 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 						})  
 					}
 					
+					promptForInput();
 				}
-				promptForInput();
                 });
 			}
 		
@@ -75,11 +101,13 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
                 sender.showConfirm("자바 챌린지에 참가하시겠습니까 ?", (result) => {
 
 				if(result == true){
+					
 					function promptForInput() {
-						sender.showPrompt("자바 챌린지의 오늘 정답은 ?", function(inputText){
+
+						sender.showPrompt( Java , function(inputText){
 							if(inputText.toLowerCase() == javaquizAnswer.toLowerCase()){
 								App.httpPostJson(
-									"http://13.125.99.177:8070/challenge/zepverify",
+									"https://godsaengplanner.com/challenge/zepverify",
 									// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
 									// "http://localhost:8080/api/zepeto",
 									{
@@ -87,7 +115,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 									},
 									{
 										cid: 2,
-										cvzepid: sender.name,
+										cvzepid: sender.id,
 										// cvtime: currentTime,
 										cvsuccessornot: 1
 									},
@@ -123,11 +151,11 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 				
 					if(result == true){	
 						function promptForInput() {
-							sender.showPrompt("자바스크립트 챌린지의 오늘 정답은 ?", function(inputText){
+							sender.showPrompt( JS , function(inputText){
 								if(inputText.toLowerCase() == jsquizAnswer.toLowerCase()){
 									
 									App.httpPostJson(
-										"http://13.125.99.177:8070/challenge/zepverify",
+										"https://godsaengplanner.com/challenge/zepverify",
 										// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
 										// "http://localhost:8080/api/zepeto",
 										{
@@ -135,7 +163,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 										},
 										{
 											cid: 2,
-											cvzepid: sender.name,
+											cvzepid: sender.id,
 											// cvtime: currentTime,
 											cvsuccessornot: 1
 										},

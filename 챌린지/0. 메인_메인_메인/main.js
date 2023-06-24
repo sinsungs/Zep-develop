@@ -56,27 +56,28 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 				  sender.showPrompt("인증 코드를 입력해 주세요.", function (inputText) {
 
 					  App.httpPostJson(
-						"http://13.125.99.177:8070/challenge/zepverify",
+						"https://godsaengplanner.com/user/zepidverify",
+						// "http://13.125.99.177:8070/challenge/zepverify",
 						// "http://localhost:8080/api/zepeto",
 						{
 						  // "test-header": "zep",
 						},
 						{
-						  zepid: sender.name,
-						  verifytime: currentTime,
+						  zepid: sender.id,
+						//   verifytime: currentTime,
 						  verifykey: inputText,
 						},
 						(res) => {
 						  if (res === '인증 성공') {
-							sender.showAlert(`${sender.name}님 인증에 성공하셨습니다.`);
+							sender.showAlert(`${sender.id}님 인증에 성공하셨습니다.`);
 							sender.spawnAt(4, 63, 1);
 							App.sayToAll(`res = ${res}`, 0xFFFFFF);
 						  } 
 						  else if(res === "이미 인증된 계정입니다.") {
-							sender.showAlert(`${sender.name}님은 인증에 성공하셨습니다. 챌린지를 수행해 주세요.`);
+							sender.showAlert(`${sender.id}님은 인증에 성공하셨습니다. 챌린지를 수행해 주세요.`);
 						  }
 						  else if(res === "인증 코드가 틀렸습니다."){
-							sender.showAlert(`${sender.name}님 잘못된 인증 코드입니다.`, function () {
+							sender.showAlert(`${sender.id}님 잘못된 인증 코드입니다.`, function () {
 							  App.sayToAll(`res = ${res}`, 0xFFFFFF);
 							  promptForInput();
 							});
