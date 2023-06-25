@@ -50,8 +50,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							App.httpPostJson(
 								"http://13.124.53.124:8080/zep/register",
 								// "https://godsaengplanner.com/challenge/zepverify",
-								// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
-								// "http://localhost:8080/api/zepeto",
+
 								{
 									// "test-header": "zep",
 								},
@@ -95,94 +94,113 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			/* 미라클 모닝 END */
 
-			if(obj.text == 2) {
+			// if(obj.text == 2) {
+
+            //         App.httpPostJson(
+			// 			"http://13.124.53.124:8080/zep/list",
+			// 			// "https://godsaengplanner.com/challenge/zepverify",
+			// 			{
+			// 				cid: 1,
+			// 			},
+            //             function (res) {	
+
+			// 				const zepRanks = JSON.parse(res);
+
+			// 				App.sayToAll(zepRanks);
+
+			// 				sender.tag = {
+			// 					widget: null,
+			// 				};
+							
+			// 				sender.tag.widget = sender.showWidget("rank.html", "top", 530, 650);
+			// 				sender.tag.widget.onMessage.Add(function (sender, data) {
+			// 					if (data.type == "close") {
+			// 						sender.showCenterLabel("위젯이 닫혔습니다.");
+			// 						sender.tag.widget.destroy();
+			// 						sender.tag.widget = null;
+			// 					}
 				
-				// sender.showAlert(currentTime, function() {
-
-				// })
-
-
-                    App.httpGet(
-                        // "http://43.201.75.139:8080",
-						"http://13.124.53.124:8080/zep/list",
-                        null,
-                        function (res) {	
-
-							// const zepRank = JSON.parse(res);
-							// const zepRank = res
-
-							// App.sayToAll(zepRank);
-
-							const zepRanks = JSON.parse(res);
-
-							App.sayToAll(zepRanks);
-
-
-							// const zepRankString = JSON.stringify(zepRank);
-							// App.sayToAll(zepRankString);
-
-							sender.tag = {
-								widget: null,
-							};
-							
-							sender.tag.widget = sender.showWidget("rank.html", "top", 530, 650);
-
-							// Iterate over the zepRank array
-							// for (const item of zepRank) {
-							// 	const cid = item.cid;
-							// 	const cvzepid = item.cvzepid;
-							// 	const cvtime = item.cvtime;
-							// 	const cvsuccessornot = item.cvsuccessornot;
-
-							// App.sayToAll(cid);
-							// App.sayToAll(cvzepid);
-							// App.sayToAll(cvtime);
-							// App.sayToAll(cvsuccessornot);
-							// App.sayToAll(zepRank);
-
-
-							
-								// html로 데이터 보내는 부분 
-								if (sender.tag.widget) {
-									sender.tag.widget.sendMessage({
-										// cid: cid,
-										// cvzepid: cvzepid,
-										// cvtime: cvtime,
-										// cvsuccessornot: cvsuccessornot,
-										zepRanks : zepRanks
-									});
-									
-								}		
-													
+			// 					App.sayToAll(data.ss);
 								
-							// }
-
+			// 				});
+				
+			// 				sender.sendUpdated();
 							
-                        }
-                    );
+			// 					// html로 데이터 보내는 부분 
+			// 					if (sender.tag.widget) {
+			// 						sender.tag.widget.sendMessage({
+			// 							// cid: cid,
+			// 							// cvzepid: cvzepid,
+			// 							// cvtime: cvtime,
+			// 							// cvsuccessornot: cvsuccessornot,
+			// 							zepRanks : zepRanks
+			// 						});
+									
+			// 					}		
+            //             }
+            //         );
 
-					sender.tag = {
-						widget: null,
-					};
+			// 		// sender.tag = {
+			// 		// 	widget: null,
+			// 		// };
 		
-					sender.tag.widget.onMessage.Add(function (sender, data) {
-						if (data.type == "close") {
-							sender.showCenterLabel("위젯이 닫혔습니다.");
-							sender.tag.widget.destroy();
-							sender.tag.widget = null;
-						}
-		
-						App.sayToAll(data.ss);
+
+
+			// }
+
+
+			if(obj.text == 2) {
+
+				App.httpGet(
+					"http://13.124.53.124:8080/zep/list",
+					// "https://godsaengplanner.com/challenge/zepverify",
+
+					null,
+					function (res) {	
+
+						const zepRanks = JSON.parse(res);
+
+						App.sayToAll(zepRanks);
+
+						sender.tag = {
+							widget: null,
+						};
 						
-					});
-		
-					sender.sendUpdated();
-
-			}
-
+						sender.tag.widget = sender.showWidget("rank.html", "top", 530, 650);
+						sender.tag.widget.onMessage.Add(function (sender, data) {
+							if (data.type == "close") {
+								sender.showCenterLabel("위젯이 닫혔습니다.");
+								sender.tag.widget.destroy();
+								sender.tag.widget = null;
+							}
 			
+							App.sayToAll(data.ss);
+							
+						});
+			
+						sender.sendUpdated();
+						
+							// html로 데이터 보내는 부분 
+							if (sender.tag.widget) {
+								sender.tag.widget.sendMessage({
+									// cid: cid,
+									// cvzepid: cvzepid,
+									// cvtime: cvtime,
+									// cvsuccessornot: cvsuccessornot,
+									zepRanks : zepRanks
+								});
+								
+							}		
+					}
+				);
+
+				// sender.tag = {
+				// 	widget: null,
+				// };
+	
 
 
+		}
 
         } 
 	} else {

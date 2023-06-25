@@ -48,10 +48,9 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 						if(inputText == randomQuote){
 						
 							App.httpPostJson(
-								"http://13.124.53.124:8080/zep/register",
-								// "https://godsaengplanner.com/challenge/zepverify",
-								// "http://ec2-43-201-154-148.ap-northeast-2.compute.amazonaws.com/index.php",
-								// "http://localhost:8080/api/zepeto",
+								// "http://13.124.53.124:8080/zep/register",
+								"https://godsaengplanner.com/challenge/zepverify",
+
 								{
 									// "test-header": "zep",
 								},
@@ -97,10 +96,12 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
 			if(obj.text == 2) {
 
-                    App.httpGet(
-                        // "http://43.201.75.139:8080",
-						"http://13.124.53.124:8080/zep/list",
-                        null,
+                    App.httpPostJson(
+						// "http://13.124.53.124:8080/zep/list",
+						"https://godsaengplanner.com/challenge/zepverify",
+						{
+							cid: 1,
+						},
                         function (res) {	
 
 							const zepRanks = JSON.parse(res);

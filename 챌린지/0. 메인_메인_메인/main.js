@@ -37,6 +37,7 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 				
 			}
 
+
 			if(obj.text == 3) {
 				sender.showConfirm("책맹탈출 챌린지에 참가하시겠습니까 ?", (result) => {
 
@@ -50,52 +51,20 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 				
 			}
 
-			/* 유저 인증 START */
-			if (obj.text == 4) {
-				function promptForInput() {
-				  sender.showPrompt("인증 코드를 입력해 주세요.", function (inputText) {
+			if(obj.text == 4) {
+				sender.showConfirm("갓생도서관에 입장하시겠습니까 ?", (result) => {
 
-					  App.httpPostJson(
-						"https://godsaengplanner.com/user/zepidverify",
-						// "http://13.125.99.177:8070/challenge/zepverify",
-						// "http://localhost:8080/api/zepeto",
-						{
-						  // "test-header": "zep",
-						},
-						{
-						  zepid: sender.id,
-						//   verifytime: currentTime,
-						  verifykey: inputText,
-						},
-						(res) => {
-						  if (res === '인증 성공') {
-							sender.showAlert(`${sender.id}님 인증에 성공하셨습니다.`);
-							sender.spawnAt(4, 63, 1);
-							App.sayToAll(`res = ${res}`, 0xFFFFFF);
-						  } 
-						  else if(res === "이미 인증된 계정입니다.") {
-							sender.showAlert(`${sender.id}님은 인증에 성공하셨습니다. 챌린지를 수행해 주세요.`);
-						  }
-						  else if(res === "인증 코드가 틀렸습니다."){
-							sender.showAlert(`${sender.id}님 잘못된 인증 코드입니다.`, function () {
-							  App.sayToAll(`res = ${res}`, 0xFFFFFF);
-							  promptForInput();
-							});
-						  }
-						  else{
-							sender.showAlert("내부 서버 에러입니다. 죄송합니다.");
-						  }
-						  
-						}
-					  );
-				  });
-				}
-				promptForInput();
-			  }
+					if(result == true){
 
-			/* 유저 인증 END */
+						sender.spawnAtMap("ADd52m", "8lYN6o");
 
-			/* 스터디 챌린지 START */
+					}
+
+				});
+				
+			}
+
+			/* 5번 START */
 
 			if (obj.text == 5) {
 				
@@ -116,15 +85,57 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 							})
 						}
 
-
-
-						
 					}
 				);
 			}
 
 
-			/* 스터디 챌린지 END */
+			/* 5번 END */
+
+			/* 유저 인증 START */
+			if (obj.text == 99) {
+				function promptForInput() {
+					sender.showPrompt("인증 코드를 입력해 주세요.", function (inputText) {
+
+						App.httpPostJson(
+						"https://godsaengplanner.com/user/zepidverify",
+						// "http://13.125.99.177:8070/challenge/zepverify",
+						// "http://localhost:8080/api/zepeto",
+						{
+							// "test-header": "zep",
+						},
+						{
+							zepid: sender.id,
+						//   verifytime: currentTime,
+							verifykey: inputText,
+						},
+						(res) => {
+							if (res === '인증 성공') {
+							sender.showAlert(`${sender.id}님 인증에 성공하셨습니다.`);
+							// sender.spawnAt(4, 63, 1);
+							App.sayToAll(`res = ${res}`, 0xFFFFFF);
+							} 
+							else if(res === "이미 인증된 계정입니다.") {
+							sender.showAlert(`${sender.id}님은 인증에 성공하셨습니다. 챌린지를 수행해 주세요.`);
+							}
+							else if(res === "인증 코드가 틀렸습니다."){
+							sender.showAlert("다시 입력 해 주세요.", function () {
+								App.sayToAll(`res = ${res}`, 0xFFFFFF);
+								// promptForInput();
+							});
+							}
+							// else{
+							// sender.showAlert();
+							// }
+							
+						}
+						);
+					});
+				}
+				promptForInput();
+				}
+
+			/* 유저 인증 END */
 
     } else {
         App.sayToAll(`obj is null`, 0xFFFFFF);
