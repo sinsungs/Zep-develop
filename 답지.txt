@@ -1,0 +1,26 @@
+	{ question: "1. answer: "물리계층" },
+	{ question: "2. answer: "전송계층" },
+	{ question: "3. answer: "응용계층" },
+	{ question: "4. answer: "ICMP"},
+	{ question: "5. answer: "ARP"},
+	{ question: "6. answer: "회복테스트"},
+	{ question: "7. answer: "안전테스트"},
+	{ question: "8. answer: "구문"},
+	{ question: "9. answer: "의미"},
+	{ question: "10.answer: "GIT"},
+	{ question: "11.answer: "반정규화"},
+	{ question: "12.answer: "ICMP"},
+	{ question: "13.answer: "IP"},
+	{ question: "14.answer: "로킹"},
+	{ question: "15.answer: "낙관적검증"},
+	{ question: "16.answer: "직관성"},
+	{ question: "17.answer: "학습성"},
+	{ question: "18.answer: "SJF"},
+	{ question: "19.answer: "기아현상"},
+	{ question: "20.answer: "IGMP"},
+
+	상희 관리자 카카오 아이디 비번
+	ID : sanghee_ok@naver.com
+	PASS : qhdms001!
+	버그 터졌을 시 카카오아이디
+	신성이껄로 로그인

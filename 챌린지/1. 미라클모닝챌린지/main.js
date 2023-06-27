@@ -98,11 +98,15 @@ App.onObjectTouched.Add(function (sender, x, y, tileID, obj) {
 
                     App.httpPostJson(
 						// "http://13.124.53.124:8080/zep/list",
-						"https://godsaengplanner.com/challenge/zepverify",
+						// "https://godsaengplanner.com/challenge/zepverify",
+						"https://godsaengplanner.com/zep/miraclemorning",
 						{
-							cid: 1,
+
 						},
-                        function (res) {	
+						{
+							c_id: 1,
+						},
+                        (res) => {	
 
 							const zepRanks = JSON.parse(res);
 
